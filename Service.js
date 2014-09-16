@@ -1,4 +1,5 @@
 var async = require('async'),
+    mac = require('getmac'),
     gpio = require('rpi-gpio'),
     proc = require('node-proc'),
     isOn = true;
@@ -6,6 +7,11 @@ var async = require('async'),
 proc.cpuinfo(function (err, cpuinfo) {
     if (!err) {
         console.log(cpuinfo[0].Serial);
+
+        mac.getMac(function(err,macAddress){
+            if (err)  throw err;
+            console.log(macAddress);
+        });
 
         async.forever(
             function(next) {
