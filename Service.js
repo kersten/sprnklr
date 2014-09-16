@@ -5,7 +5,7 @@ var async = require('async'),
 
 proc.cpuinfo(function (err, cpuinfo) {
     if (!err) {
-        console.log(cpuinfo);
+        console.log(cpuinfo[0].Serial);
 
         async.forever(
             function(next) {
