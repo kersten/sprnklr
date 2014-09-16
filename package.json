@@ -1,0 +1,28 @@
+{
+  "name": "sprnklr",
+  "version": "0.0.1",
+  "description": "Service software for the sprnklr system",
+  "main": "Service.js",
+  "dependencies": {
+    "rpi-gpio": "^0.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kersten/sprnklr.git"
+  },
+  "keywords": [
+    "sprinkler",
+    "home-automation",
+    "garden"
+  ],
+  "author": "Kersten Burkhardt",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/kersten/sprnklr/issues"
+  },
+  "homepage": "https://github.com/kersten/sprnklr"
+}
