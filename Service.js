@@ -6,7 +6,7 @@ var async = require('async'),
 
 proc.cpuinfo(function (err, cpuinfo) {
     if (!err) {
-        console.log(cpuinfo[0].Serial);
+        console.log(cpuinfo[1].Serial);
 
         mac.getMac(function(err,macAddress){
             if (err)  throw err;
