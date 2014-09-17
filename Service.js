@@ -2,7 +2,7 @@ var async = require('async'),
     mac = require('getmac'),
     gpio = require('rpi-gpio'),
     gpios = [7, 11, 12, 13, 15, 16, 18, 22];
-    request = requre('request'),
+    request = require('request'),
     proc = require('node-proc'),
     isOn = true;
 
