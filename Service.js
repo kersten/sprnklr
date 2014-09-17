@@ -50,6 +50,8 @@ async.parallel({
                     setTimeout(next, 3000);
                     //});
                 }
+
+                write();
             });
         },
         function(err) {
