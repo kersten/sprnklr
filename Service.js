@@ -29,7 +29,7 @@ async.parallel({
         function(next) {
             request.post('http://garden.sprnklr.de/system', {
                 form: {
-                    serial: info[1].Serial,
+                    serial: info.serial[1].Serial,
                     mac: info.mac
                 }
             }, function (err, r, body) {
