@@ -1,20 +1,36 @@
 var async = require('async'),
     mac = require('getmac'),
     gpio = require('rpi-gpio'),
+    gpios = [7, 11, 12, 13, 15, 16, 18, 22];
+    request = requre('request'),
     proc = require('node-proc'),
     isOn = true;
 
-proc.cpuinfo(function (err, cpuinfo) {
-    if (!err) {
-        console.log(cpuinfo[1].Serial);
+async.parallel({
+    off: function (done) {
+        async.each(gpios, function (single, done) {
+            gpio.setup(single, gpio.DIR_OUT, function () {
+                gpio.write(single, false, done);
+            });
+        }, done);
+    },
 
-        mac.getMac(function(err,macAddress){
-            if (err)  throw err;
-            console.log(macAddress);
-        });
+    serial: function (done) {
+        proc.cpuinfo(done);
+    },
 
-        async.forever(
-            function(next) {
+    mac: function (done) {
+        mac.getMac(done);
+    }
+}, function (err, info) {
+    async.forever(
+        function(next) {
+            request.post('http://garden.sprnklr.de/system', {
+                form: {
+                    serial: info.serial,
+                    mac: info.mac
+                }
+            }, function (err, r, body) {
                 //gpio.setup(15, gpio.DIR_OUT, write);
 
                 function write () {
@@ -25,17 +41,16 @@ proc.cpuinfo(function (err, cpuinfo) {
                     }
 
                     //gpio.write(15, isOn, function (err) {
-                        //if (err) throw err;
+                    //if (err) throw err;
 
-                        setTimeout(next, 3000);
+                    setTimeout(next, 3000);
                     //});
                 }
-            },
-            function(err) {
-                // if next is called with a value in its first parameter, it will appear
-                // in here as 'err', and execution will stop.
-            }
-        );
-    }
+            });
+        },
+        function(err) {
+            // if next is called with a value in its first parameter, it will appear
+            // in here as 'err', and execution will stop.
+        }
+    );
 });
-
