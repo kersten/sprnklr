@@ -27,8 +27,9 @@ async.parallel({
 
     async.forever(
         function(next) {
-            request.post('http://garden.sprnklr.de/system', {
-                form: {
+            request('http://garden.sprnklr.de/system', {
+                method: 'POST',
+                json: {
                     serial: info.serial[1].Serial,
                     mac: info.mac
                 }
