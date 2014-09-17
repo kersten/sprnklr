@@ -15,7 +15,7 @@ proc.cpuinfo(function (err, cpuinfo) {
 
         async.forever(
             function(next) {
-                gpio.setup(15, gpio.DIR_OUT, write);
+                //gpio.setup(15, gpio.DIR_OUT, write);
 
                 function write () {
                     if (isOn) {
@@ -24,11 +24,11 @@ proc.cpuinfo(function (err, cpuinfo) {
                         isOn = true;
                     }
 
-                    gpio.write(15, isOn, function (err) {
-                        if (err) throw err;
+                    //gpio.write(15, isOn, function (err) {
+                        //if (err) throw err;
 
                         setTimeout(next, 3000);
-                    });
+                    //});
                 }
             },
             function(err) {
