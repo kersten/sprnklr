@@ -34,25 +34,13 @@ async.parallel({
                     mac: info.mac
                 }
             }, function (err, r, body) {
-                console.log(body);
-
-                //gpio.setup(15, gpio.DIR_OUT, write);
-
-                function write () {
-                    if (isOn) {
-                        isOn = false;
-                    } else {
-                        isOn = true;
-                    }
-
-                    //gpio.write(15, isOn, function (err) {
-                    //if (err) throw err;
-
+                async.each(gpios, function (single, done) {
+                    gpio.setup(single, gpio.DIR_OUT, function () {
+                        gpio.write(single, body[single], done);
+                    });
+                }, function () {
                     setTimeout(next, 3000);
-                    //});
-                }
-
-                write();
+                });
             });
         },
         function(err) {
