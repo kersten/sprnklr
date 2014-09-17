@@ -44,9 +44,11 @@ async.parallel({
                             done(null);
                         }
                     }, function () {
+                        cache = body;
                         setTimeout(next, 3000);
                     });
                 } else {
+                    cache = body;
                     setTimeout(next, 3000);
                 }
             });
