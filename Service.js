@@ -4,7 +4,7 @@ var async = require('async'),
     gpios = [7, 11, 12, 13, 15, 16, 18, 22];
     request = require('request'),
     proc = require('node-proc'),
-    isOn = true;
+    cache = {};
 
 async.parallel({
     off: function (done) {
@@ -34,13 +34,21 @@ async.parallel({
                     mac: info.mac
                 }
             }, function (err, r, body) {
-                async.each(gpios, function (single, done) {
-                    gpio.setup(single, gpio.DIR_OUT, function () {
-                        gpio.write(single, body[single], done);
+                if (cache !== body) {
+                    async.each(gpios, function (single, done) {
+                        if (cache[single] !== body[single]) {
+                            gpio.setup(single, gpio.DIR_OUT, function () {
+                                gpio.write(single, body[single], done);
+                            });
+                        } else {
+                            done(null);
+                        }
+                    }, function () {
+                        setTimeout(next, 3000);
                     });
-                }, function () {
+                } else {
                     setTimeout(next, 3000);
-                });
+                }
             });
         },
         function(err) {
