@@ -29,10 +29,12 @@ async.parallel({
         function(next) {
             request.post('http://garden.sprnklr.de/system', {
                 form: {
-                    serial: info.serial,
+                    serial: info[1].Serial,
                     mac: info.mac
                 }
             }, function (err, r, body) {
+                console.log(body);
+
                 //gpio.setup(15, gpio.DIR_OUT, write);
 
                 function write () {
