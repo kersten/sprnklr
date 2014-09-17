@@ -23,6 +23,8 @@ async.parallel({
         mac.getMac(done);
     }
 }, function (err, info) {
+    console.log(err, info);
+
     async.forever(
         function(next) {
             request.post('http://garden.sprnklr.de/system', {
